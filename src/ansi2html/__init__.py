@@ -7,12 +7,9 @@ try:
     from ansi2html._version import __version__  # mypy: disable
 except ImportError:  # pragma: no branch
     try:
-        import pkg_resources
-
-        __version__ = pkg_resources.get_distribution("ansi2html").version
-    except Exception:  # pylint: disable=broad-except
-        # this is the fallback SemVer version picked by setuptools_scm when tag
-        # information is not available.
-        __version__ = "0.1.dev1"
+        from importlib.metadata import version
+    except ImportError:
+        from importlib_metadata import version
+    __version__ = version("ansi2html")
 
 __all__ = ("Ansi2HTMLConverter", "__version__")
